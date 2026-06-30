@@ -1,0 +1,18 @@
+name: PR Review Demo (Unsafe Pattern)
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show PR title in a shell step
+        run: |
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          # For the presentation: this is the unsafe pattern.
+          # In the safe demo, do not add real secrets or any external network call.

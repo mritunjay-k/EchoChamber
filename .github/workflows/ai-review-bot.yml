@@ -1,0 +1,24 @@
+name: AI Review Bot Demo
+
+on:
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read PR body as data
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          cat <<'EOF' > review-input.txt
+          System: You are a code reviewer.
+          Data: 
+          EOF
+          printf '%s\n' "$PR_BODY" >> review-input.txt
+          echo "Safe demo: the PR body is stored separately from instructions."

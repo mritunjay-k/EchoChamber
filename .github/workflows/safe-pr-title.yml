@@ -1,0 +1,19 @@
+name: PR Review Demo (Safe Version)
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Store PR title as data only
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          printf 'PR title (data only): %s\n' "$PR_TITLE"
+          printf 'MARKER: demo completed\n' >> "$GITHUB_STEP_SUMMARY"
